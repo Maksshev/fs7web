@@ -6,6 +6,11 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class ServletCalculator extends HttpServlet {
+    private final UserStorage security;
+
+    public ServletCalculator(UserStorage security) {
+        this.security = security;
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -14,6 +19,8 @@ public class ServletCalculator extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        boolean checked = security.check("user", "passwd");
+
         ParameterFromRequest pfr = new ParameterFromRequest(req);
         int a = pfr.getInt("a");
         int b = pfr.getInt("b");
