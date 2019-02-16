@@ -55,7 +55,7 @@ public class ServletCalculator extends HttpServlet {
 
     private void saveOperationToDb(int a, String operation, int b, int result) {
         try {
-            String sql = "INSERT INTO history (a, op, b, r) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO history1 (a, op, b, r) VALUES (?, ?, ?, ?)";
             PreparedStatement stm = conn.prepareStatement(sql);
             stm.setInt(1, a);
             stm.setString(2, operation);
