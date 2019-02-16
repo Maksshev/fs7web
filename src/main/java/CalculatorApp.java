@@ -16,6 +16,7 @@ public class CalculatorApp {
         ServletExamples servlet1 = new ServletExamples();
         ServletContextHandler handler = new ServletContextHandler();
 
+        handler.addServlet(new ServletHolder(new ServletFreemarker()), "/free");
         handler.addServlet(new ServletHolder(new ServletCookies()), "/c/*");
         handler.addServlet(new ServletHolder(servlet1), "/admin/*");
         handler.addServlet(new ServletHolder(new ServletLogin(security)), "/login/*");
