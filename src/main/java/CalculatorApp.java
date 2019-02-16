@@ -6,7 +6,7 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import javax.servlet.DispatcherType;
 import java.util.EnumSet;
 
-public class App {
+public class CalculatorApp {
     public static void main(String[] args) throws Exception {
         UserStorage security = new UserStorageHashMap();
 
