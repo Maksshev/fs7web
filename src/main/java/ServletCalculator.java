@@ -4,12 +4,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class ServletCalculator extends HttpServlet {
     private final UserStorage security;
+    private final Connection conn;
 
-    public ServletCalculator(UserStorage security) {
+    public ServletCalculator(UserStorage security, Connection conn) {
         this.security = security;
+        this.conn = conn;
     }
 
     @Override
@@ -19,6 +24,7 @@ public class ServletCalculator extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        System.out.println("I'm here");
         boolean checked = security.check("user", "passwd");
 
         ParameterFromRequest pfr = new ParameterFromRequest(req);
@@ -45,6 +51,21 @@ public class ServletCalculator extends HttpServlet {
                 operation = "/";
                 break;
         }
+        //saveOperationToDb(a,operation,b,result);
         resp.getWriter().printf("%d %s %d = %d", a, operation, b, result);
+    }
+
+    private void saveOperationToDb(int a, String operation, int b, int result) {
+        try {
+            String sql = "INSERT INTO history (a, op, b, r) VALUES (?, ?, ?, ?)";
+            PreparedStatement stm = conn.prepareStatement(sql);
+            stm.setInt(1, a);
+            stm.setString(2, operation);
+            stm.setInt(3, b);
+            stm.setInt(4, result);
+            stm.execute();
+        } catch (SQLException e) {
+            new IllegalStateException("Smth went wrong", e);
+        }
     }
 }
