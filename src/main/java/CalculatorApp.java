@@ -22,7 +22,7 @@ public class CalculatorApp {
         handler.addServlet(new ServletHolder(new ServletLogin(security)), "/login/*");
         handler.addServlet(new ServletHolder(new ServletCalculator(security, conn)), "/calc/*");
 
-        handler.addFilter(new FilterHolder(new CalculatorFilter()), "/calc", EnumSet.of(DispatcherType.INCLUDE, DispatcherType.REQUEST));
+        //handler.addFilter(new FilterHolder(new CalculatorFilter()), "/calc", EnumSet.of(DispatcherType.INCLUDE, DispatcherType.REQUEST));
         handler.addFilter(CalculatorFilter.class, "/calc/*", EnumSet.of(DispatcherType.INCLUDE, DispatcherType.REQUEST));
         handler.addFilter(CalculatorFilterDivByZero.class, "/calc/*", EnumSet.of(DispatcherType.INCLUDE, DispatcherType.REQUEST));
 

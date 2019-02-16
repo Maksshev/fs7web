@@ -24,9 +24,7 @@ public class ServletCalculator extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        System.out.println("I'm here");
-        boolean checked = security.check("user", "passwd");
-
+//        boolean checked = security.check("user", "passwd");
         ParameterFromRequest pfr = new ParameterFromRequest(req);
         int a = pfr.getInt("a");
         int b = pfr.getInt("b");
@@ -51,7 +49,7 @@ public class ServletCalculator extends HttpServlet {
                 operation = "/";
                 break;
         }
-        //saveOperationToDb(a,operation,b,result);
+        saveOperationToDb(a,operation,b,result);
         resp.getWriter().printf("%d %s %d = %d", a, operation, b, result);
     }
 
